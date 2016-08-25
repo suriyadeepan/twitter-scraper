@@ -90,3 +90,6 @@ ENV/
 
 # vim files
 .*swp
+
+# ignore json files
+*.json
