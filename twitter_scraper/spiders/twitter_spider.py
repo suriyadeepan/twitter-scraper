@@ -6,7 +6,7 @@ import utils
 class TwitterSpider(scrapy.Spider):
     name = 'tspider'
     allowed_domains = [ 'twitter.com' ]
-    start_urls = utils.get_urls(filename='seeds.csv')
+    start_urls = utils.get_urls(filename='en_sent.csv', index=0)
 
     def parse(self, response):
         # get soup from response
@@ -14,6 +14,6 @@ class TwitterSpider(scrapy.Spider):
         # get text from soup
         tweet_text = soup.find('div', {'class' : 'js-tweet-text-container'}).find('p').text
         # get tweet id from url
-        tweet_id   = utils.url2id(response.url)
+        tweet_id   = soup.find('div', {'class' : 'permalink-tweet'}).get('data-item-id')
         # return data
         yield { 'tid'  : tweet_id, 'text' : tweet_text }
